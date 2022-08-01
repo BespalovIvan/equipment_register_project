@@ -1,50 +1,28 @@
 package com.ivanbespalov.study.equipment_register_project.service;
 
 import com.ivanbespalov.study.equipment_register_project.dao.ModelSmartphoneRepository;
-import com.ivanbespalov.study.equipment_register_project.dao.SmartphoneRepository;
 import com.ivanbespalov.study.equipment_register_project.entity.ModelSmartphone;
-import com.ivanbespalov.study.equipment_register_project.entity.Smartphone;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ModelSmartphoneServiceImpl implements ModelSmartphoneService {
 
     private final ModelSmartphoneRepository modelSmartphoneRepository;
-    private final SmartphoneRepository smartphoneRepository;
 
-    public ModelSmartphoneServiceImpl(ModelSmartphoneRepository modelSmartphoneRepository, SmartphoneRepository smartphoneRepository) {
+    public ModelSmartphoneServiceImpl(ModelSmartphoneRepository modelSmartphoneRepository) {
         this.modelSmartphoneRepository = modelSmartphoneRepository;
-        this.smartphoneRepository = smartphoneRepository;
     }
 
     @Override
-    public List<ModelSmartphone> getAllModelsSmartphone(int id) {
-        Smartphone smartphone;
-        try {
-            Optional<Smartphone> optionalSmartphone = smartphoneRepository.findById(id);
-            if (optionalSmartphone.isPresent()) {
-                smartphone = optionalSmartphone.get();
-                return smartphone.getModelsSmartphone();
-            }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        throw new NullPointerException("Not found smartphone");
+    public List<ModelSmartphone> getAllModelsForSmartphone(int id) {
+        return modelSmartphoneRepository.findBySmartphoneId(id);
     }
 
     @Override
-    public void addNewModelForSmartphone(int id, ModelSmartphone modelSmartphone) {
+    public void addNewModelForSmartphone(ModelSmartphone modelSmartphone) {
         modelSmartphoneRepository.save(modelSmartphone);
-        Smartphone smartphone;
-        Optional<Smartphone> optionalSmartphone = smartphoneRepository.findById(id);
-        if (optionalSmartphone.isPresent()) {
-            smartphone = optionalSmartphone.get();
-            smartphone.getModelsSmartphone().add(modelSmartphone);
-            smartphoneRepository.save(smartphone);
-        }
     }
 
     @Override
@@ -56,6 +34,6 @@ public class ModelSmartphoneServiceImpl implements ModelSmartphoneService {
 
     @Override
     public List<ModelSmartphone> getAllSmartphonesFromPrice(int min, int max) {
-        return modelSmartphoneRepository.findByPriceBetween(min,max);
+        return modelSmartphoneRepository.findByPriceBetween(min, max);
     }
 }

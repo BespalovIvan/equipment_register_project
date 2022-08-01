@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ModelSmartphoneService {
 
-    List<ModelSmartphone> getAllModelsSmartphone(int id);
+    List<ModelSmartphone> getAllModelsForSmartphone(int id);
 
-    void addNewModelForSmartphone(int id, ModelSmartphone modelSmartphone);
+    void addNewModelForSmartphone(ModelSmartphone modelSmartphone);
 
    List<ModelSmartphone> getAllSmartphonesFromColor(String color);
 

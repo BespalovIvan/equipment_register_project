@@ -1,5 +1,6 @@
 package com.ivanbespalov.study.equipment_register_project.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -28,4 +29,8 @@ public class ModelSmartphone {
 
     private boolean availability;
 
+    @ManyToOne
+    @JoinColumn(name = "smartphone_id")
+    @JsonBackReference
+    private Smartphone smartphone;
 }

@@ -1,6 +1,6 @@
 package com.ivanbespalov.study.equipment_register_project.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,7 +24,7 @@ public class Smartphone {
 
     private boolean credit;
 
-    @OneToMany
-    @JsonIgnore
-    private List<ModelSmartphone> modelsSmartphone;
+    @OneToMany(mappedBy = "smartphone")
+    @JsonManagedReference
+    private List<ModelSmartphone> modelSmartphones;
 }

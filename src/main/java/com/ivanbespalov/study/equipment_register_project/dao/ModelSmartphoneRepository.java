@@ -11,4 +11,9 @@ public interface ModelSmartphoneRepository extends JpaRepository<ModelSmartphone
     List<ModelSmartphone> findByColorIgnoreCase(String color);
 
     List<ModelSmartphone> findByPriceBetween(int min,int max);
+
+    List<ModelSmartphone> findBySmartphoneId(int id);
+
+
+
 }

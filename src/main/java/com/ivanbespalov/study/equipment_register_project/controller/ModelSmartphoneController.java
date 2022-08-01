@@ -18,21 +18,21 @@ public class ModelSmartphoneController {
 
     @GetMapping("/modelsmartphones/{id}")
     public List<ModelSmartphone> getModelsSmartphone(@PathVariable int id){
-        return modelSmartphoneService.getAllModelsSmartphone(id);
+        return modelSmartphoneService.getAllModelsForSmartphone(id);
     }
 
-    @GetMapping(value = "/modelsmartphones/color/{color}")
+    @GetMapping("/modelsmartphones/color/{color}")
     public List<ModelSmartphone> getSmartphonesFromColor(@PathVariable String color){
         return modelSmartphoneService.getAllSmartphonesFromColor(color);
     }
 
-    @GetMapping(value = "/modelsmartphones/price/{min}/{max}")
-    public List<ModelSmartphone> getSmartphonesFromColor(@PathVariable int min,@PathVariable int max){
+    @GetMapping("/modelsmartphones/price/{min}/{max}")
+    public List<ModelSmartphone> getSmartphonesFromPrice(@PathVariable int min,@PathVariable int max){
         return modelSmartphoneService.getAllSmartphonesFromPrice(min,max);
     }
-    @PostMapping("/modelsmartphones/{id}")
-    public void addNewModelForSmartphone(@PathVariable int id, @RequestBody ModelSmartphone modelSmartphone){
-        modelSmartphoneService.addNewModelForSmartphone(id,modelSmartphone);
+    @PostMapping("/modelsmartphones")
+    public void addNewModelForSmartphone(@RequestBody ModelSmartphone modelSmartphone){
+        modelSmartphoneService.addNewModelForSmartphone(modelSmartphone);
     }
 
 }
