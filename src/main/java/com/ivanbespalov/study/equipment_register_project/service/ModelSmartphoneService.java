@@ -6,12 +6,28 @@ import java.util.List;
 
 public interface ModelSmartphoneService {
 
-    List<ModelSmartphone> getAllModelsForSmartphone(int id);
+    List<ModelSmartphone> getAllModelsSmartphones();
 
-    void addNewModelForSmartphone(ModelSmartphone modelSmartphone);
+    List<ModelSmartphone> getAllModelsForSmartphone(String name);
 
-   List<ModelSmartphone> getAllSmartphonesFromColor(String color);
+    ModelSmartphone addNewModelForSmartphone(ModelSmartphone modelSmartphone);
 
-   List<ModelSmartphone> getAllSmartphonesFromPrice(int min,int max);
+    List<ModelSmartphone> getAllSmartphonesFromColor(String color);
+
+    List<ModelSmartphone> getAllSmartphonesFromPrice(int min, int max);
+
+    ModelSmartphone getBySerialNumber(int serialNumber);
+
+    List<ModelSmartphone> getBySize(String size);
+
+    List<ModelSmartphone> getByMemory(String memory);
+
+    List<ModelSmartphone> getByNumberOfCameras(int numberOfCameras);
+
+    List<ModelSmartphone> getByAvailability(boolean availability);
+
+    List<ModelSmartphone> getAllModelsSmartphoneOrderByAlphabet();
+
+    List<ModelSmartphone> getAllModelsSmartphoneOrderByPrice();
 
 }

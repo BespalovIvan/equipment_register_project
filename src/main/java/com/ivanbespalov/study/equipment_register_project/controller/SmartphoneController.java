@@ -1,6 +1,7 @@
 package com.ivanbespalov.study.equipment_register_project.controller;
 
-import com.ivanbespalov.study.equipment_register_project.entity.Smartphone;
+import com.ivanbespalov.study.equipment_register_project.dto.ModelSmartphoneDto;
+import com.ivanbespalov.study.equipment_register_project.dto.SmartphoneDto;
 import com.ivanbespalov.study.equipment_register_project.service.SmartphoneService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,17 +18,22 @@ public class SmartphoneController {
     }
 
     @GetMapping("/smartphones")
-    public List<Smartphone> getAllSmartphones() {
+    public List<SmartphoneDto> getAllSmartphones() {
         return service.getAllSmartphone();
     }
 
-    @PostMapping("/smartphones")
-    public void addNewSmartphone(@RequestBody Smartphone smartphone) {
-        service.addNewSmartphone(smartphone);
+    @GetMapping("/smartphones/{name}")
+    public List<ModelSmartphoneDto> getSmartphoneByName(@PathVariable String name) {
+        return service.getModelsSmartphoneByName(name);
     }
 
-    @GetMapping("/smartphones/{name}")
-    public Smartphone getSmartphoneByName(@PathVariable String name) {
-        return service.getSmartphoneByName(name);
+    @GetMapping("/smartphones/orderByAlphabet")
+    public List<SmartphoneDto> getAllSmartphonesOrderByAlphabet() {
+        return service.getAllSmartphoneOrderByAlphabet();
+    }
+
+    @PostMapping("/smartphones")
+    public SmartphoneDto addNewSmartphone(@RequestBody SmartphoneDto smartphone) {
+        return service.addNewSmartphone(smartphone);
     }
 }
