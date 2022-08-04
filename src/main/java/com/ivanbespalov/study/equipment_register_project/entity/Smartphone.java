@@ -27,8 +27,8 @@ public class Smartphone {
 
     private boolean credit;
 
-    @OneToMany(mappedBy = "smartphone")
-    @JsonManagedReference
+    @OneToMany
+    @JoinColumn(name = "smartphone_id")
     private List<ModelSmartphone> modelSmartphones;
 
     public Smartphone() {

@@ -17,20 +17,14 @@ public class ModelSmartphoneServiceImpl implements ModelSmartphoneService {
     }
 
     @Override
-    public List<ModelSmartphone> getAllModelsForSmartphone(String name) {
-        return modelSmartphoneRepository.findByNameIgnoreCase(name);
-    }
-
-    @Override
     public List<ModelSmartphone> getAllModelsSmartphones() {
 
         return modelSmartphoneRepository.findAll();
     }
 
     @Override
-    public ModelSmartphone addNewModelForSmartphone(ModelSmartphone modelSmartphone) {
-        modelSmartphoneRepository.save(modelSmartphone);
-        return modelSmartphone;
+    public List<ModelSmartphone> getAllModelsForName(String name) {
+        return modelSmartphoneRepository.findByNameIgnoreCase(name);
     }
 
     @Override
@@ -78,5 +72,11 @@ public class ModelSmartphoneServiceImpl implements ModelSmartphoneService {
     @Override
     public List<ModelSmartphone> getAllModelsSmartphoneOrderByPrice() {
         return modelSmartphoneRepository.findByOrderByPrice();
+    }
+
+    @Override
+    public ModelSmartphone addNewModelForSmartphone(ModelSmartphone modelSmartphone) {
+        modelSmartphoneRepository.save(modelSmartphone);
+        return modelSmartphone;
     }
 }

@@ -2,6 +2,7 @@ package com.ivanbespalov.study.equipment_register_project.controller;
 
 import com.ivanbespalov.study.equipment_register_project.dto.ModelSmartphoneDto;
 import com.ivanbespalov.study.equipment_register_project.dto.SmartphoneDto;
+import com.ivanbespalov.study.equipment_register_project.entity.Smartphone;
 import com.ivanbespalov.study.equipment_register_project.service.SmartphoneService;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,12 @@ public class SmartphoneController {
         return service.getAllSmartphone();
     }
 
-    @GetMapping("/smartphones/{name}")
+    @GetMapping("/smartphones/{id}")
+    public Smartphone getSmartphoneById(@PathVariable int id) {
+        return service.getSmartphoneByID(id);
+    }
+
+    @GetMapping("/smartphones/name/{name}")
     public List<ModelSmartphoneDto> getSmartphoneByName(@PathVariable String name) {
         return service.getModelsSmartphoneByName(name);
     }

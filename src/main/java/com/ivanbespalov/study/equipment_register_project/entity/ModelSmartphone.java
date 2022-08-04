@@ -31,9 +31,4 @@ public class ModelSmartphone {
     private int numberOfCameras;
 
     private boolean availability;
-
-    @ManyToOne
-    @JoinColumn(name = "smartphone_id")
-    @JsonBackReference
-    private Smartphone smartphone;
 }

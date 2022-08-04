@@ -1,7 +1,9 @@
 package com.ivanbespalov.study.equipment_register_project.controller;
 
 import com.ivanbespalov.study.equipment_register_project.entity.ModelSmartphone;
+import com.ivanbespalov.study.equipment_register_project.entity.Smartphone;
 import com.ivanbespalov.study.equipment_register_project.service.ModelSmartphoneService;
+import com.ivanbespalov.study.equipment_register_project.service.SmartphoneService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,19 +13,21 @@ import java.util.List;
 public class ModelSmartphoneController {
 
     private final ModelSmartphoneService modelSmartphoneService;
+    private final SmartphoneService service;
 
-    public ModelSmartphoneController(ModelSmartphoneService modelSmartphoneService) {
+    public ModelSmartphoneController(ModelSmartphoneService modelSmartphoneService, SmartphoneService service) {
         this.modelSmartphoneService = modelSmartphoneService;
+        this.service = service;
     }
 
     @GetMapping("/modelsmartphones")
-    public List<ModelSmartphone> getAllModelsSmartphones(){
+    public List<ModelSmartphone> getAllModelsSmartphones() {
         return modelSmartphoneService.getAllModelsSmartphones();
     }
 
     @GetMapping("/modelsmartphones/name/{name}")
-    public List<ModelSmartphone> getModelsSmartphone(@PathVariable String name) {
-        return modelSmartphoneService.getAllModelsForSmartphone(name);
+    public List<ModelSmartphone> getModelsForName(@PathVariable String name) {
+        return modelSmartphoneService.getAllModelsForName(name);
     }
 
     @GetMapping("/modelsmartphones/color/{color}")
@@ -71,8 +75,12 @@ public class ModelSmartphoneController {
         return modelSmartphoneService.getAllModelsSmartphoneOrderByPrice();
     }
 
-    @PostMapping("/modelsmartphones")
-    public ModelSmartphone addNewModelForSmartphone(@RequestBody ModelSmartphone modelSmartphone) {
-        return modelSmartphoneService.addNewModelForSmartphone(modelSmartphone);
+    @PostMapping("/modelsmartphones/{id}")
+    public ModelSmartphone addNewModelForSmartphone(@PathVariable int id, @RequestBody ModelSmartphone modelSmartphone) {
+        Smartphone smartphoneByID = service.getSmartphoneByID(id);
+        List<ModelSmartphone> modelSmartphoneList = smartphoneByID.getModelSmartphones();
+        modelSmartphoneList.add(modelSmartphoneService.addNewModelForSmartphone(modelSmartphone));
+        service.updateSmartphone(smartphoneByID);
+        return modelSmartphone;
     }
 }

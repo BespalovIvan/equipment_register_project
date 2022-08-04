@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SmartphoneServiceImpl implements SmartphoneService {
@@ -34,6 +35,12 @@ public class SmartphoneServiceImpl implements SmartphoneService {
                     s.isCredit()));
         }
         return smartphoneDtoList;
+    }
+
+    @Override
+    public Smartphone getSmartphoneByID(int id) {
+        Optional<Smartphone> smartphoneOptional = smartphoneRepository.findById(id);
+        return smartphoneOptional.orElseThrow(NullPointerException::new);
     }
 
     @Override
@@ -86,5 +93,8 @@ public class SmartphoneServiceImpl implements SmartphoneService {
         return smartphoneDto;
     }
 
-
+    @Override
+    public void updateSmartphone(Smartphone smartphone) {
+        smartphoneRepository.save(smartphone);
+    }
 }

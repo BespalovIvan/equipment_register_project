@@ -8,9 +8,8 @@ public interface ModelSmartphoneService {
 
     List<ModelSmartphone> getAllModelsSmartphones();
 
-    List<ModelSmartphone> getAllModelsForSmartphone(String name);
+    List<ModelSmartphone> getAllModelsForName(String name);
 
-    ModelSmartphone addNewModelForSmartphone(ModelSmartphone modelSmartphone);
 
     List<ModelSmartphone> getAllSmartphonesFromColor(String color);
 
@@ -29,5 +28,7 @@ public interface ModelSmartphoneService {
     List<ModelSmartphone> getAllModelsSmartphoneOrderByAlphabet();
 
     List<ModelSmartphone> getAllModelsSmartphoneOrderByPrice();
+
+    ModelSmartphone addNewModelForSmartphone(ModelSmartphone modelSmartphone);
 
 }
