@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 @Data
 @NoArgsConstructor
 public class ModelComputer extends ModelBase {
-    private String Category;
-    private String Cpu;
+    private String category;
+    private String cpu;
 
 
     public ModelComputer(ModelComputerDto modelComputerDto) {

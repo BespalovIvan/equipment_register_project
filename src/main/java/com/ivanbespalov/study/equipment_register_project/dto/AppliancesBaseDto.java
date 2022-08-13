@@ -10,4 +10,13 @@ public class AppliancesBaseDto extends EntityBaseDto {
     private String firm;
     private boolean isOrderOnline;
     private boolean isCredit;
+
+    protected void isOrderOnline(boolean orderOnline) {
+        this.isOrderOnline = orderOnline;
+    }
+
+    protected void isCredit(boolean credit) {
+        this.isCredit = credit;
+    }
 }
+

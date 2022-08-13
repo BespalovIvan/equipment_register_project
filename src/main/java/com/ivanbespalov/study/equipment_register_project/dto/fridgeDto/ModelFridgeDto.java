@@ -9,8 +9,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class ModelFridgeDto extends ModelBaseDto {
 
-    private int modelFridgeDtoCountDoor;
-    private String modelFridgeDtoCompressorType;
+    private int countDoor;
+    private String compressorType;
 
     public ModelFridgeDto(ModelFridge modelFridge) {
     }

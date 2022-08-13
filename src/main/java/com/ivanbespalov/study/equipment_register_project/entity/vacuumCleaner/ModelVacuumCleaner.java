@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 @Data
 @NoArgsConstructor
 public class ModelVacuumCleaner extends ModelBase {
-    private int DustContainerVolume;
-    private int CountModes;
+    private int dustContainerVolume;
+    private int countModes;
 
     public ModelVacuumCleaner(ModelVacuumCleanerDto modelVacuumCleanerDto) {
     }

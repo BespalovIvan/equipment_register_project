@@ -9,8 +9,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class ModelComputerDto extends ModelBaseDto {
 
-    private String modelComputerDtoCategory;
-    private String modelComputerDtoCpu;
+    private String category;
+    private String cpu;
 
     public ModelComputerDto(ModelComputer modelComputer) {
 

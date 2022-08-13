@@ -15,4 +15,14 @@ public abstract class AppliancesBase extends EntityBase {
     private boolean isCredit;
 
     public abstract List<ModelBase> getModelAvailability();
+
+    public void isOrderOnline(boolean isOrderOnline) {
+      this.isOrderOnline = isOrderOnline;
+    }
+
+    public void isCredit(boolean isCredit) {
+        this.isCredit = isCredit;
+    }
+
+
 }

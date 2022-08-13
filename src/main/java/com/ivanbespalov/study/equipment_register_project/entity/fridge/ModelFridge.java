@@ -11,8 +11,8 @@ import javax.persistence.Entity;
 @Data
 @NoArgsConstructor
 public class ModelFridge extends ModelBase {
-    private int CountDoor;
-    private String CompressorType;
+    private int countDoor;
+    private String compressorType;
 
     public ModelFridge(ModelFridgeDto modelFridgeDto) {
     }

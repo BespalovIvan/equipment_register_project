@@ -2,10 +2,9 @@ package com.ivanbespalov.study.equipment_register_project.controller.smartphoneC
 
 import com.ivanbespalov.study.equipment_register_project.dto.smartphoneDto.SmartphoneDto;
 import com.ivanbespalov.study.equipment_register_project.service.smartphoneService.SmartphoneService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -19,7 +18,12 @@ public class SmartphoneController {
 
     @PostMapping("/smartphones")
     public SmartphoneDto addNewSmartphone(@RequestBody SmartphoneDto smartphoneDto) {
-        return smartphoneService.addNewSmartphone(smartphoneDto);
+        return smartphoneService.saveSmartphone(smartphoneDto);
+    }
+
+    @GetMapping("/smartphones/{id}")
+    public SmartphoneDto getSmartphoneById(@PathVariable UUID id) {
+        return smartphoneService.getSmartphoneById(id);
     }
 
 }

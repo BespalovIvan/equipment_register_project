@@ -12,8 +12,8 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 public class ModelTelevision extends ModelBase {
 
-    private String Category;
-    private String Technology;
+    private String category;
+    private String technology;
 
     public ModelTelevision(ModelTelevisionDto modelTelevisionDto) {
     }

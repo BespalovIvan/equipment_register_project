@@ -13,4 +13,8 @@ public class ModelBase extends EntityBase {
     private String size;
     private int price;
     private boolean isAvailability;
+
+    protected void isAvailability(boolean availability) {
+        this.isAvailability = availability;
+    }
 }

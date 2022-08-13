@@ -9,8 +9,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class ModelVacuumCleanerDto extends ModelBaseDto {
 
-    private int DustContainerVolume;
-    private int CountModes;
+    private int dustContainerVolume;
+    private int countModes;
     public ModelVacuumCleanerDto(ModelVacuumCleaner modelVacuumCleaner) {
 
     }

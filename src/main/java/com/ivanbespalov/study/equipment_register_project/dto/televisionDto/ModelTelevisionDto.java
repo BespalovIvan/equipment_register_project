@@ -9,8 +9,8 @@ import lombok.Data;
 @AllArgsConstructor
 public class ModelTelevisionDto extends ModelBaseDto {
 
-    private String Category;
-    private String Technology;
+    private String category;
+    private String technology;
 
     public ModelTelevisionDto(ModelTelevision modelTelevision) {
 
