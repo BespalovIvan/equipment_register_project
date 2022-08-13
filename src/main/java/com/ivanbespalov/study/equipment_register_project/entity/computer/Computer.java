@@ -1,37 +1,34 @@
 package com.ivanbespalov.study.equipment_register_project.entity.computer;
 
 import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerDto;
+import com.ivanbespalov.study.equipment_register_project.entity.AppliancesBase;
+import com.ivanbespalov.study.equipment_register_project.entity.ModelBase;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
-@Table(name = "computer")
-public class Computer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID computerId;
-    private String computerName;
-    private String computerCountryOfManufacturer;
-    private String computerFirm;
-    private boolean isOrderOnlineComputer;
-    private boolean isCreditComputer;
+@NoArgsConstructor
+public class Computer extends AppliancesBase {
     @OneToMany
     @JoinColumn(name = "computer_id")
     private List<ModelComputer> modelComputers;
 
-    public Computer() {
-    }
-
     public Computer(ComputerDto computerDto) {
-        this.computerName = computerDto.getComputerDtoName();
-        this.computerCountryOfManufacturer = computerDto.getComputerDtoCountryOfManufacturer();
-        this.computerFirm = computerDto.getComputerDtoFirm();
-        this.isOrderOnlineComputer = computerDto.isOrderOnlineComputerDto();
-        this.isCreditComputer = computerDto.isCreditComputerDto();
+
     }
 
+    @Override
+    public List<ModelBase> getModelAvailability() {
+        return modelComputers
+                .stream()
+                .filter(ModelBase::isAvailability)
+                .collect(Collectors.toList());
+    }
 }

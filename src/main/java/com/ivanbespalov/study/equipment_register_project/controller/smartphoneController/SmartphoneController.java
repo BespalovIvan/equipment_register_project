@@ -18,7 +18,8 @@ public class SmartphoneController {
     }
 
     @PostMapping("/smartphones")
-    public SmartphoneDto addNewSmartphone(@RequestBody SmartphoneDto smartphone) {
-        return smartphoneService.addNewSmartphone(smartphone);
+    public SmartphoneDto addNewSmartphone(@RequestBody SmartphoneDto smartphoneDto) {
+        return smartphoneService.addNewSmartphone(smartphoneDto);
     }
+
 }

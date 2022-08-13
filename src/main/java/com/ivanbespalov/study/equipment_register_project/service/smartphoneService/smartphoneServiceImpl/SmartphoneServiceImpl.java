@@ -6,8 +6,6 @@ import com.ivanbespalov.study.equipment_register_project.entity.smartphone.Smart
 import com.ivanbespalov.study.equipment_register_project.service.smartphoneService.SmartphoneService;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 public class SmartphoneServiceImpl implements SmartphoneService {
 
@@ -19,17 +17,8 @@ public class SmartphoneServiceImpl implements SmartphoneService {
 
     @Override
     public SmartphoneDto addNewSmartphone(SmartphoneDto smartphoneDto) {
-        Smartphone smartphone = smartphoneRepository.save(new Smartphone(smartphoneDto));
-        return new SmartphoneDto(smartphone);
-    }
-
-    @Override
-    public Smartphone getSmartphoneByID(UUID id) {
-        return smartphoneRepository.findById(id).orElseThrow(NullPointerException::new);
-    }
-
-    @Override
-    public void updateSmartphone(Smartphone smartphone) {
+        Smartphone smartphone = new Smartphone(smartphoneDto);
         smartphoneRepository.save(smartphone);
+        return new SmartphoneDto(smartphone);
     }
 }

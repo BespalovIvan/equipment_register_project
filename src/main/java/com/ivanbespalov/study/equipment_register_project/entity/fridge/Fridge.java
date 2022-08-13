@@ -1,36 +1,35 @@
 package com.ivanbespalov.study.equipment_register_project.entity.fridge;
 
 import com.ivanbespalov.study.equipment_register_project.dto.fridgeDto.FridgeDto;
+import com.ivanbespalov.study.equipment_register_project.entity.AppliancesBase;
+import com.ivanbespalov.study.equipment_register_project.entity.ModelBase;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
-@Table(name = "fridge")
-public class Fridge {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID fridgeId;
-    private String fridgeName;
-    private String fridgeCountryOfManufacturer;
-    private String fridgeFirm;
-    private boolean isOrderOnlineFridge;
-    private boolean isCreditFridge;
+@NoArgsConstructor
+public class Fridge extends AppliancesBase {
     @OneToMany
     @JoinColumn(name = "fridge_id")
     private List<ModelFridge> modelFridges;
 
-    public Fridge() {
-    }
+
     public Fridge(FridgeDto fridgeDto) {
-        this.fridgeName = fridgeDto.getFridgeDtoName();
-        this.fridgeCountryOfManufacturer = fridgeDto.getFridgeDtoCountryOfManufacturer();
-        this.fridgeFirm = fridgeDto.getFridgeDtoFirm();
-        this.isOrderOnlineFridge = fridgeDto.isOrderOnlineFridgeDto();
-        this.isCreditFridge = fridgeDto.isCreditFridgeDto();
+
+    }
+
+    @Override
+    public List<ModelBase> getModelAvailability() {
+        return modelFridges
+                .stream()
+                .filter(ModelBase::isAvailability)
+                .collect(Collectors.toList());
     }
 }
