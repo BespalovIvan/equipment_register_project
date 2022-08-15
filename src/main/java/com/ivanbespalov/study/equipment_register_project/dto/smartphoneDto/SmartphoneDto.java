@@ -1,26 +1,26 @@
 package com.ivanbespalov.study.equipment_register_project.dto.smartphoneDto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ivanbespalov.study.equipment_register_project.dto.AppliancesBaseDto;
-import com.ivanbespalov.study.equipment_register_project.entity.smartphone.Smartphone;
+import com.ivanbespalov.study.equipment_register_project.dto.RegistryAbstractDto;
+import com.ivanbespalov.study.equipment_register_project.model.smartphone.Smartphone;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
-public class SmartphoneDto extends AppliancesBaseDto {
+public class SmartphoneDto extends RegistryAbstractDto {
 
     @JsonIgnore
-    private List<ModelSmartphoneDto> modelSmartphoneDto;
+    private Set<SmartphoneModelDto> smartphoneModelDto;
 
     public SmartphoneDto(Smartphone smartphone) {
         this.setId(smartphone.getId());
         this.setName(smartphone.getName());
-        this.setFirm(smartphone.getFirm());
-        this.setCountryOfManufacturer(smartphone.getCountryOfManufacturer());
-        this.isOrderOnline(smartphone.isOrderOnline());
+        this.setFirma(smartphone.getFirma());
+        this.setCountry(smartphone.getCountry());
+        this.isOnline(smartphone.isOnline());
         this.isCredit(smartphone.isCredit());
     }
 }

@@ -16,14 +16,4 @@ public class SmartphoneController {
         this.smartphoneService = smartphoneService;
     }
 
-    @PostMapping("/smartphones")
-    public SmartphoneDto addNewSmartphone(@RequestBody SmartphoneDto smartphoneDto) {
-        return smartphoneService.saveSmartphone(smartphoneDto);
-    }
-
-    @GetMapping("/smartphones/{id}")
-    public SmartphoneDto getSmartphoneById(@PathVariable UUID id) {
-        return smartphoneService.getSmartphoneById(id);
-    }
-
 }

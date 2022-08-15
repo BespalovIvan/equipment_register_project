@@ -1,19 +1,25 @@
 package com.ivanbespalov.study.equipment_register_project.dto.computerDto;
 
-import com.ivanbespalov.study.equipment_register_project.dto.AppliancesBaseDto;
-import com.ivanbespalov.study.equipment_register_project.entity.computer.Computer;
-import lombok.AllArgsConstructor;
+import com.ivanbespalov.study.equipment_register_project.dto.RegistryAbstractDto;
+import com.ivanbespalov.study.equipment_register_project.model.computer.Computer;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
-@AllArgsConstructor
-public class ComputerDto extends AppliancesBaseDto {
-    private List<ModelComputerDto> modelsComputerDto;
+@NoArgsConstructor
+public class ComputerDto extends RegistryAbstractDto {
 
+
+    private Set<ComputerModelDto> modelsComputerDto;
 
     public ComputerDto(Computer computer) {
-
+        this.setId(computer.getId());
+        this.setName(computer.getName());
+        this.setFirma(computer.getFirma());
+        this.setCountry(computer.getCountry());
+        this.isOnline(computer.isOnline());
+        this.isCredit(computer.isCredit());
     }
 }
