@@ -1,17 +1,15 @@
 package com.ivanbespalov.study.equipment_register_project.service.computerService;
 
 import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerDto;
+import com.ivanbespalov.study.equipment_register_project.model.computer.Computer;
 
-import java.util.UUID;
+import java.util.List;
 
 public interface ComputerService {
-    ComputerDto saveComputer(ComputerDto computerDto);
+    ComputerDto addNewComputer(ComputerDto computerDto);
 
-    ComputerDto getComputerById(UUID id);
+    ComputerDto getComputerByName(String name);
 
-    ComputerDto updateComputer(ComputerDto computerDto);
-
-    String deleteComputer(UUID id);
-
+    List<ComputerDto> getAllComputers();
 
 }

@@ -3,14 +3,14 @@ package com.ivanbespalov.study.equipment_register_project.service.computerServic
 import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerDto;
 import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerModelDto;
 import com.ivanbespalov.study.equipment_register_project.model.computer.Computer;
-import com.ivanbespalov.study.equipment_register_project.model.computer.ComputerModel;
 import com.ivanbespalov.study.equipment_register_project.repository.computerRepository.ComputerRepository;
 import com.ivanbespalov.study.equipment_register_project.service.computerService.ComputerService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Service
 public class ComputerServiceImpl implements ComputerService {
@@ -22,41 +22,30 @@ public class ComputerServiceImpl implements ComputerService {
     }
 
     @Override
-    public ComputerDto saveComputer(ComputerDto computerDto) {
+    public ComputerDto addNewComputer(ComputerDto computerDto) {
         Computer computer = new Computer(computerDto);
         computerRepository.save(computer);
         return new ComputerDto(computer);
     }
 
     @Override
-    public ComputerDto getComputerById(UUID id) {
+    public ComputerDto getComputerByName(String name) {
         Computer computer = computerRepository
-                .findById(id)
-                .orElseThrow(() -> new NullPointerException("computer with id " + " not found"));
-        ComputerDto computerDto = new ComputerDto(computer);
-        Set<ComputerModel> modelAvailability = computer.getModelAvailability();
+                .findByNameIgnoreCase(name)
+                .orElseThrow(() -> new NullPointerException("computer with name " + name + " not found"));
         Set<ComputerModelDto> computerModelDto = new HashSet<>();
-        for (ComputerModel model : modelAvailability) {
-            computerModelDto.add(new ComputerModelDto(model));
-        }
-        computerDto.setModelsComputerDto(computerModelDto);
+        computer.getModelAvailability()
+                .forEach(model -> computerModelDto.add(new ComputerModelDto(model)));
+        ComputerDto computerDto = new ComputerDto(computer);
+        computerDto.setComputerModels(computerModelDto);
         return computerDto;
     }
 
     @Override
-    public ComputerDto updateComputer(ComputerDto computerDto) {
-        Computer computer = new Computer(computerDto);
-        computer.setId(computerDto.getId());
-        computerRepository.save(computer);
-        return new ComputerDto(computer);
-    }
-
-    @Override
-    public String deleteComputer(UUID id) {
-        Computer computer = computerRepository
-                .findById(id)
-                .orElseThrow(() -> new NullPointerException("computer not found"));
-        computerRepository.delete(computer);
-        return "Computer with id " + id + " was deleted";
+    public List<ComputerDto> getAllComputers() {
+        List<ComputerDto> computerDtoList = new ArrayList<>();
+        List<Computer> computers = computerRepository.findAll();
+        computers.forEach(computer -> computerDtoList.add(new ComputerDto(computer)));
+        return computerDtoList;
     }
 }

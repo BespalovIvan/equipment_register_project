@@ -8,6 +8,8 @@ import com.ivanbespalov.study.equipment_register_project.repository.fridgeReposi
 import com.ivanbespalov.study.equipment_register_project.service.FridgeService.FridgeModelService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,7 +24,7 @@ public class FridgeModelServiceImpl implements FridgeModelService {
     }
 
     @Override
-    public FridgeModelDto saveFridgeModel(UUID id, FridgeModelDto fridgeModelDto) {
+    public FridgeModelDto addNewFridgeModel(UUID id, FridgeModelDto fridgeModelDto) {
         FridgeModel fridgeModel = new FridgeModel(fridgeModelDto);
         fridgeModelRepository.save(fridgeModel);
         Fridge fridge = fridgeRepository
@@ -31,5 +33,37 @@ public class FridgeModelServiceImpl implements FridgeModelService {
         fridge.getFridgeModels().add(fridgeModel);
         fridgeRepository.save(fridge);
         return new FridgeModelDto(fridgeModel);
+    }
+
+    @Override
+    public List<FridgeModelDto> getModelsByColor(String color) {
+        List<FridgeModel> models = fridgeModelRepository.findByColorIgnoreCase(color);
+        List<FridgeModelDto> modelsDto = new ArrayList<>();
+        models.forEach(model -> modelsDto.add(new FridgeModelDto(model)));
+        return modelsDto;
+    }
+
+    @Override
+    public List<FridgeModelDto> getModelsByPrice(int min, int max) {
+        List<FridgeModel> models = fridgeModelRepository.findByPriceBetween(min,max);
+        List<FridgeModelDto> modelsDto = new ArrayList<>();
+        models.forEach(model -> modelsDto.add(new FridgeModelDto(model)));
+        return modelsDto;
+    }
+
+    @Override
+    public List<FridgeModelDto> getModelsByCountDoor(int countDoor) {
+        List<FridgeModel> models = fridgeModelRepository.findByCountDoor(countDoor);
+        List<FridgeModelDto> modelsDto = new ArrayList<>();
+        models.forEach(model -> modelsDto.add(new FridgeModelDto(model)));
+        return modelsDto;
+    }
+
+    @Override
+    public List<FridgeModelDto> getModelsByCompressorType(String compressorType) {
+        List<FridgeModel> models = fridgeModelRepository.findByCompressorTypeIgnoreCase(compressorType);
+        List<FridgeModelDto> modelsDto = new ArrayList<>();
+        models.forEach(model -> modelsDto.add(new FridgeModelDto(model)));
+        return modelsDto;
     }
 }

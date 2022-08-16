@@ -6,6 +6,9 @@ import com.ivanbespalov.study.equipment_register_project.repository.fridgeReposi
 import com.ivanbespalov.study.equipment_register_project.service.FridgeService.FridgeService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class FridgeServiceImpl implements FridgeService {
 
@@ -16,9 +19,24 @@ public class FridgeServiceImpl implements FridgeService {
     }
 
     @Override
-    public FridgeDto saveFridge(FridgeDto fridgeDto) {
+    public FridgeDto addNewFridge(FridgeDto fridgeDto) {
         Fridge fridge = new Fridge(fridgeDto);
         fridgeRepository.save(fridge);
         return new FridgeDto(fridge);
+    }
+
+    @Override
+    public FridgeDto getFridgeByName(String name) {
+        Fridge fridge = fridgeRepository.findByNameIgnoreCase(name)
+                .orElseThrow(() -> new NullPointerException("Fridge with name " + name + " not found"));
+        return new FridgeDto(fridge);
+    }
+
+    @Override
+    public List<FridgeDto> getFridges() {
+        List<Fridge> fridges = fridgeRepository.findAll();
+        List<FridgeDto> fridgeDto = new ArrayList<>();
+        fridges.forEach(fridge -> fridgeDto.add(new FridgeDto(fridge)));
+        return fridgeDto;
     }
 }

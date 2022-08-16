@@ -1,10 +1,11 @@
 package com.ivanbespalov.study.equipment_register_project.controller.computerController;
 
 import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerDto;
+import com.ivanbespalov.study.equipment_register_project.model.computer.Computer;
 import com.ivanbespalov.study.equipment_register_project.service.computerService.ComputerService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
+import java.util.List;
 
 @RestController
 @RequestMapping("api")
@@ -18,20 +19,15 @@ public class ComputerController {
 
     @PostMapping("/computers")
     public ComputerDto addNewComputer(@RequestBody ComputerDto computerDto){
-        return computerService.saveComputer(computerDto);
+        return computerService.addNewComputer(computerDto);
     }
-    @GetMapping("/computers/{id}")
-    public ComputerDto getComputerById(@PathVariable UUID id){
-        return computerService.getComputerById(id);
-    }
-    @PutMapping("/computers")
-    public ComputerDto updateComputer(@RequestBody ComputerDto computerDto){
-        return computerService.updateComputer(computerDto);
-    }
-    @DeleteMapping("/computers/{id}")
-    public String deleteComputer(@PathVariable UUID id){
-        return computerService.deleteComputer(id);
+    @GetMapping("/computers/{name}")
+    public ComputerDto getComputerByName(@PathVariable String name){
+        return computerService.getComputerByName(name);
     }
 
-
+    @GetMapping("/computers")
+    public List<ComputerDto> getAllComputers(){
+       return computerService.getAllComputers();
+    }
 }

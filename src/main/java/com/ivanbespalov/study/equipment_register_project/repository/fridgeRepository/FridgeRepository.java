@@ -3,8 +3,9 @@ package com.ivanbespalov.study.equipment_register_project.repository.fridgeRepos
 import com.ivanbespalov.study.equipment_register_project.model.fridge.Fridge;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface FridgeRepository extends JpaRepository<Fridge, UUID> {
-
+    Optional<Fridge> findByNameIgnoreCase(String name);
 }

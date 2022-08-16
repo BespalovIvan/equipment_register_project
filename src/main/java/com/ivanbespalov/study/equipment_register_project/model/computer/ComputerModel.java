@@ -2,6 +2,7 @@ package com.ivanbespalov.study.equipment_register_project.model.computer;
 
 import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerModelDto;
 import com.ivanbespalov.study.equipment_register_project.model.ModelAbstract;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

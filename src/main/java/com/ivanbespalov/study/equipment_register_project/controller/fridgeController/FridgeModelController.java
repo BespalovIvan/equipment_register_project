@@ -4,6 +4,7 @@ import com.ivanbespalov.study.equipment_register_project.dto.fridgeDto.FridgeMod
 import com.ivanbespalov.study.equipment_register_project.service.FridgeService.FridgeModelService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,6 +20,26 @@ public class FridgeModelController {
     @PostMapping("/modelfridges/{id}")
     public FridgeModelDto addNewModelFromFridge(@PathVariable UUID id,
                                                 @RequestBody FridgeModelDto fridgeModelDto) {
-        return fridgeModelService.saveFridgeModel(id, fridgeModelDto);
+        return fridgeModelService.addNewFridgeModel(id, fridgeModelDto);
+    }
+
+    @GetMapping("/modelfridges/color/{color}")
+    public List<FridgeModelDto> getModelByColor(@PathVariable String color) {
+        return fridgeModelService.getModelsByColor(color);
+    }
+
+    @GetMapping("/modelfridges/price/{min}/{max}")
+    public List<FridgeModelDto> getModelsByPrice(@PathVariable int min, @PathVariable int max) {
+        return fridgeModelService.getModelsByPrice(min,max);
+    }
+
+    @GetMapping("/modelfridges/countdoor/{count}")
+    public List<FridgeModelDto> getModelsByCategory(@PathVariable int count) {
+        return fridgeModelService.getModelsByCountDoor(count);
+    }
+
+    @GetMapping("/modelfridges/compressor/{compressor}")
+    public List<FridgeModelDto> getModelsByCpu(@PathVariable String compressor) {
+        return fridgeModelService.getModelsByCompressorType(compressor);
     }
 }
