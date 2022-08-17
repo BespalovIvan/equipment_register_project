@@ -1,13 +1,13 @@
 package com.ivanbespalov.study.equipment_register_project.service.FridgeService;
 
-import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerModelDto;
+import com.ivanbespalov.study.equipment_register_project.dto.fridgeDto.FridgeFilterDto;
 import com.ivanbespalov.study.equipment_register_project.dto.fridgeDto.FridgeModelDto;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 public interface FridgeModelService {
-    FridgeModelDto addNewFridgeModel(UUID id, FridgeModelDto fridgeModelDto);
+    FridgeModelDto addNewFridgeModel(FridgeModelDto fridgeModelDto);
 
     List<FridgeModelDto> getModelsByColor(String color);
 
@@ -16,4 +16,6 @@ public interface FridgeModelService {
     List<FridgeModelDto> getModelsByCountDoor(int countDoor);
 
     List<FridgeModelDto> getModelsByCompressorType(String compressorType);
+
+    Map<String,List<FridgeModelDto>> getModelsByFilter(FridgeFilterDto fridgeFilterDto);
 }

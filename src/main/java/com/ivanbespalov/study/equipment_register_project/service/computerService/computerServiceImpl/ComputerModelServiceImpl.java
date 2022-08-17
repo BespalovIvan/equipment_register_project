@@ -1,5 +1,6 @@
 package com.ivanbespalov.study.equipment_register_project.service.computerService.computerServiceImpl;
 
+import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerFilterDto;
 import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerModelDto;
 import com.ivanbespalov.study.equipment_register_project.model.computer.Computer;
 import com.ivanbespalov.study.equipment_register_project.model.computer.ComputerModel;
@@ -9,8 +10,9 @@ import com.ivanbespalov.study.equipment_register_project.service.computerService
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 @Service
 public class ComputerModelServiceImpl implements ComputerModelService {
@@ -24,16 +26,38 @@ public class ComputerModelServiceImpl implements ComputerModelService {
     }
 
     @Override
-    public ComputerModelDto addModelFromComputer(UUID id, ComputerModelDto computerModelDto) {
-
+    public ComputerModelDto addModelFromComputer(ComputerModelDto computerModelDto) {
         ComputerModel computerModel = new ComputerModel(computerModelDto);
         computerModelRepository.save(computerModel);
         Computer computer = computerRepository
-                .findById(id)
-                .orElseThrow(() -> new NullPointerException("computer with id " + id + " not found"));
+                .findById(computerModelDto.getAppliancesId())
+                .orElseThrow(() -> new NullPointerException("computer with id "
+                        + computerModelDto.getAppliancesId() + " not found"));
         computer.getComputerModels().add(computerModel);
         computerRepository.save(computer);
-        return new ComputerModelDto(computerModel);
+        ComputerModelDto dtoResult = new ComputerModelDto(computerModel);
+        dtoResult.setAppliancesId(computerModelDto.getAppliancesId());
+        return dtoResult;
+    }
+
+    @Override
+    public Map<String, List<ComputerModelDto>> filterModels(ComputerFilterDto computerFilterDto) {
+        Map<String, List<ComputerModelDto>> result = new HashMap<>();
+        if (computerFilterDto.getColor() != null) {
+            result.put("Models by color " + computerFilterDto.getColor(), getModelsByColor(computerFilterDto.getColor()));
+        }
+        if (computerFilterDto.getPriceMin() != 0 &&
+                computerFilterDto.getPriceMax() != 0) {
+            result.put("Models by price " + computerFilterDto.getPriceMin() + computerFilterDto.getPriceMax(),
+                    getModelsByPrice(computerFilterDto.getPriceMin(), computerFilterDto.getPriceMax()));
+        }
+        if (computerFilterDto.getCategory() != null) {
+            result.put("Models by category " + computerFilterDto.getCategory(), getModelsByCategory(computerFilterDto.getCategory()));
+        }
+        if (computerFilterDto.getCpu() != null) {
+            result.put("Models by cpu " + computerFilterDto.getCpu(), getModelsByCpu(computerFilterDto.getCpu()));
+        }
+        return result;
     }
 
     @Override

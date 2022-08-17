@@ -1,12 +1,13 @@
 package com.ivanbespalov.study.equipment_register_project.service.computerService;
 
+import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerFilterDto;
 import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerModelDto;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 public interface ComputerModelService {
-    ComputerModelDto addModelFromComputer(UUID id, ComputerModelDto computerModelDto);
+    ComputerModelDto addModelFromComputer(ComputerModelDto computerModelDto);
 
     List<ComputerModelDto> getModelsByColor(String color);
 
@@ -16,4 +17,5 @@ public interface ComputerModelService {
 
     List<ComputerModelDto> getModelsByCpu(String cpu);
 
+    Map<String,List<ComputerModelDto>> filterModels(ComputerFilterDto computerFilterDto);
 }
