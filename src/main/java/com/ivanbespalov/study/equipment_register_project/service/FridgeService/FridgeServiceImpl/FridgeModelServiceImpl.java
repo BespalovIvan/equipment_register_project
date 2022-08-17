@@ -1,6 +1,5 @@
 package com.ivanbespalov.study.equipment_register_project.service.FridgeService.FridgeServiceImpl;
 
-import com.ivanbespalov.study.equipment_register_project.dto.computerDto.ComputerModelDto;
 import com.ivanbespalov.study.equipment_register_project.dto.fridgeDto.FridgeFilterDto;
 import com.ivanbespalov.study.equipment_register_project.dto.fridgeDto.FridgeModelDto;
 import com.ivanbespalov.study.equipment_register_project.model.fridge.Fridge;
@@ -8,12 +7,14 @@ import com.ivanbespalov.study.equipment_register_project.model.fridge.FridgeMode
 import com.ivanbespalov.study.equipment_register_project.repository.fridgeRepository.FridgeModelRepository;
 import com.ivanbespalov.study.equipment_register_project.repository.fridgeRepository.FridgeRepository;
 import com.ivanbespalov.study.equipment_register_project.service.FridgeService.FridgeModelService;
+import com.ivanbespalov.study.equipment_register_project.utils.QPredicates;
+import com.querydsl.core.types.Predicate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import static com.ivanbespalov.study.equipment_register_project.model.fridge.QFridgeModel.fridgeModel;
 
 @Service
 public class FridgeModelServiceImpl implements FridgeModelService {
@@ -42,56 +43,17 @@ public class FridgeModelServiceImpl implements FridgeModelService {
     }
 
     @Override
-    public Map<String, List<FridgeModelDto>> getModelsByFilter(FridgeFilterDto fridgeFilterDto) {
-        Map<String, List<FridgeModelDto>> result = new HashMap<>();
-        if (fridgeFilterDto.getColor() != null) {
-            result.put("Models by color " + fridgeFilterDto.getColor(), getModelsByColor(fridgeFilterDto.getColor()));
-        }
-        if (fridgeFilterDto.getPriceMin() != 0 &&
-                fridgeFilterDto.getPriceMax() != 0) {
-            result.put("Models by price " + fridgeFilterDto.getPriceMin() + fridgeFilterDto.getPriceMax(),
-                    getModelsByPrice(fridgeFilterDto.getPriceMin(), fridgeFilterDto.getPriceMax()));
-        }
-        if (fridgeFilterDto.getCountDoor() != 0) {
-            result.put("Models by count door " + fridgeFilterDto.getCountDoor(),
-                    getModelsByCountDoor(fridgeFilterDto.getCountDoor()));
-        }
-        if (fridgeFilterDto.getCompressorType() != null) {
-            result.put("Models by price " + fridgeFilterDto.getCompressorType(),
-                    getModelsByCompressorType(fridgeFilterDto.getCompressorType()));
-        }
+    public List<FridgeModelDto> findByFilter(FridgeFilterDto fridgeFilterDto) {
+        List<FridgeModel> fridgeModels = new ArrayList<>();
+        List<FridgeModelDto> result = new ArrayList<>();
+        Predicate predicate = QPredicates.builder()
+                .add(fridgeFilterDto.getCountDoor(), fridgeModel.countDoor::eq)
+                .add(fridgeFilterDto.getColor(), fridgeModel.color::containsIgnoreCase)
+                .add(fridgeFilterDto.getCompressorType(), fridgeModel.compressorType::containsIgnoreCase)
+                .buildAnd();
+        Iterable<FridgeModel> filterModels = fridgeModelRepository.findAll(predicate);
+        filterModels.forEach(fridgeModels::add);
+        fridgeModels.forEach(model -> result.add(new FridgeModelDto(model)));
         return result;
-    }
-
-    @Override
-    public List<FridgeModelDto> getModelsByColor(String color) {
-        List<FridgeModel> models = fridgeModelRepository.findByColorIgnoreCase(color);
-        List<FridgeModelDto> modelsDto = new ArrayList<>();
-        models.forEach(model -> modelsDto.add(new FridgeModelDto(model)));
-        return modelsDto;
-    }
-
-    @Override
-    public List<FridgeModelDto> getModelsByPrice(int min, int max) {
-        List<FridgeModel> models = fridgeModelRepository.findByPriceBetween(min, max);
-        List<FridgeModelDto> modelsDto = new ArrayList<>();
-        models.forEach(model -> modelsDto.add(new FridgeModelDto(model)));
-        return modelsDto;
-    }
-
-    @Override
-    public List<FridgeModelDto> getModelsByCountDoor(int countDoor) {
-        List<FridgeModel> models = fridgeModelRepository.findByCountDoor(countDoor);
-        List<FridgeModelDto> modelsDto = new ArrayList<>();
-        models.forEach(model -> modelsDto.add(new FridgeModelDto(model)));
-        return modelsDto;
-    }
-
-    @Override
-    public List<FridgeModelDto> getModelsByCompressorType(String compressorType) {
-        List<FridgeModel> models = fridgeModelRepository.findByCompressorTypeIgnoreCase(compressorType);
-        List<FridgeModelDto> modelsDto = new ArrayList<>();
-        models.forEach(model -> modelsDto.add(new FridgeModelDto(model)));
-        return modelsDto;
     }
 }
