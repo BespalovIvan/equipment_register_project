@@ -9,6 +9,7 @@ import com.ivanbespalov.study.equipment_register_project.repository.computerRepo
 import com.ivanbespalov.study.equipment_register_project.service.computerService.ComputerModelService;
 import com.ivanbespalov.study.equipment_register_project.utils.QPredicates;
 import com.querydsl.core.types.Predicate;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,15 +18,10 @@ import java.util.List;
 import static com.ivanbespalov.study.equipment_register_project.model.computer.QComputerModel.computerModel;
 
 @Service
+@RequiredArgsConstructor
 public class ComputerModelServiceImpl implements ComputerModelService {
     private final ComputerModelRepository computerModelRepository;
     private final ComputerRepository computerRepository;
-
-    public ComputerModelServiceImpl(ComputerModelRepository computerModelRepository,
-                                    ComputerRepository computerRepository) {
-        this.computerModelRepository = computerModelRepository;
-        this.computerRepository = computerRepository;
-    }
 
     @Override
     public ComputerModelDto addModelFromComputer(ComputerModelDto computerModelDto) {
@@ -47,9 +43,14 @@ public class ComputerModelServiceImpl implements ComputerModelService {
         List<ComputerModel> computerModels = new ArrayList<>();
         List<ComputerModelDto> result = new ArrayList<>();
         Predicate predicate = QPredicates.builder()
+                .add(filterDto.getSerialNumber(), computerModel.serialNumber::eq)
                 .add(filterDto.getCategory(), computerModel.category::containsIgnoreCase)
                 .add(filterDto.getCpu(), computerModel.cpu::containsIgnoreCase)
                 .add(filterDto.getColor(), computerModel.color::containsIgnoreCase)
+                .add(filterDto.getName(), computerModel.name::containsIgnoreCase)
+                .add(filterDto.getSize(),computerModel.size::containsIgnoreCase)
+                .add(filterDto.getPriceMin(), computerModel.price::goe)
+                .add(filterDto.getPriceMax(),computerModel.price::loe)
                 .buildAnd();
         Iterable<ComputerModel> filterModels = computerModelRepository.findAll(predicate);
         filterModels.forEach(computerModels::add);

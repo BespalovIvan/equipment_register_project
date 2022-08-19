@@ -8,10 +8,10 @@ import javax.persistence.MappedSuperclass;
 @Data
 public abstract class ModelAbstract extends EntityBase {
 
-    private int serialNumber;
+    private Integer serialNumber;
     private String color;
     private String size;
-    private int price;
+    private Integer price;
     private boolean isAvailability;
 
     protected void isAvailability(boolean availability) {

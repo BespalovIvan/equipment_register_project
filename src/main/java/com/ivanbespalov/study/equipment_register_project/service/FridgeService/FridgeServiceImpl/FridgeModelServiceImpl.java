@@ -9,6 +9,7 @@ import com.ivanbespalov.study.equipment_register_project.repository.fridgeReposi
 import com.ivanbespalov.study.equipment_register_project.service.FridgeService.FridgeModelService;
 import com.ivanbespalov.study.equipment_register_project.utils.QPredicates;
 import com.querydsl.core.types.Predicate;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,15 +18,11 @@ import java.util.List;
 import static com.ivanbespalov.study.equipment_register_project.model.fridge.QFridgeModel.fridgeModel;
 
 @Service
+@RequiredArgsConstructor
 public class FridgeModelServiceImpl implements FridgeModelService {
-
     private final FridgeModelRepository fridgeModelRepository;
     private final FridgeRepository fridgeRepository;
 
-    public FridgeModelServiceImpl(FridgeModelRepository fridgeModelRepository, FridgeRepository fridgeRepository) {
-        this.fridgeModelRepository = fridgeModelRepository;
-        this.fridgeRepository = fridgeRepository;
-    }
 
     @Override
     public FridgeModelDto addNewFridgeModel(FridgeModelDto fridgeModelDto) {
@@ -47,9 +44,14 @@ public class FridgeModelServiceImpl implements FridgeModelService {
         List<FridgeModel> fridgeModels = new ArrayList<>();
         List<FridgeModelDto> result = new ArrayList<>();
         Predicate predicate = QPredicates.builder()
-                .add(fridgeFilterDto.getCountDoor(), fridgeModel.countDoor::eq)
+                .add(fridgeFilterDto.getCountDoor(),fridgeModel.countDoor::eq)
+                .add(fridgeFilterDto.getSerialNumber(),fridgeModel.serialNumber::eq)
                 .add(fridgeFilterDto.getColor(), fridgeModel.color::containsIgnoreCase)
                 .add(fridgeFilterDto.getCompressorType(), fridgeModel.compressorType::containsIgnoreCase)
+                .add(fridgeFilterDto.getName(), fridgeModel.name::containsIgnoreCase)
+                .add(fridgeFilterDto.getSize(),fridgeModel.size::containsIgnoreCase)
+                .add(fridgeFilterDto.getPriceMin(),fridgeModel.price::goe)
+                .add(fridgeFilterDto.getPriceMax(),fridgeModel.price::loe)
                 .buildAnd();
         Iterable<FridgeModel> filterModels = fridgeModelRepository.findAll(predicate);
         filterModels.forEach(fridgeModels::add);

@@ -10,10 +10,10 @@ import java.util.UUID;
 public abstract class ModelAbstractDto extends EntityBaseDto {
 
     private UUID appliancesId;
-    private int serialNumber;
+    private Integer serialNumber;
     private String color;
     private String size;
-    private int price;
+    private Integer price;
     private boolean isAvailability;
 
     protected void isAvailability(boolean availability) {

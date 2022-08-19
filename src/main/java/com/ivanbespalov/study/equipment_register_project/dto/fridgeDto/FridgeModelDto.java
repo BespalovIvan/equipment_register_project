@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FridgeModelDto extends ModelAbstractDto {
 
-    private int countDoor;
+    private Integer countDoor;
     private String compressorType;
 
     public FridgeModelDto(FridgeModel fridgeModel) {

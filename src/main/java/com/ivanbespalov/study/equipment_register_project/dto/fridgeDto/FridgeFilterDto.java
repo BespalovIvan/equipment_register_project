@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class FridgeFilterDto extends FilterAbstract {
-    private int countDoor;
+    private Integer countDoor;
     private String compressorType;
 }

@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class FilterAbstract {
+    private String name;
+    private Integer serialNumber;
     private String color;
-    private int price;
+    private String size;
+    private Integer priceMin;
+    private Integer priceMax;
 }

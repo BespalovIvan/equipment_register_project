@@ -8,5 +8,4 @@ import java.util.UUID;
 
 public interface ComputerModelRepository extends JpaRepository<ComputerModel, UUID>,
         QuerydslPredicateExecutor<ComputerModel> {
-
 }

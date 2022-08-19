@@ -12,9 +12,7 @@ import java.util.List;
 @RequestMapping("/api/computers")
 @RequiredArgsConstructor
 public class ComputerModelController {
-
     private final ComputerModelService computerModelService;
-
 
     @PostMapping("/modelcomputers")
     public ComputerModelDto addNewModelFromComputer(@RequestBody ComputerModelDto computerModelDto) {
